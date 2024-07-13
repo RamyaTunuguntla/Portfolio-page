@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Portfolio</title>
+  <style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+nav li {
+  margin: 0 10px;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.hero {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.profile-pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  box-shadow: 0 0 20px rgba(7, 0, 0, 0.917);
+
+}
+
+.about {
+  background-color: #f4f4f4;
+  padding: 50px 20px;
+}
+
+.projects {
+  padding: 50px 20px;
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 30px;
+}
+
+.project img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.project-link {
+  display: inline-block;
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  text-decoration: none;
+  margin-top: 10px;
+}
+
+.contact {
+  padding: 50px 20px;
+}
+
+.contact form {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.contact label,
+.contact input,
+.contact textarea,
+.contact button {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+}
+  </style>
+</head>
+<script>
+
+fetch('projects.json')
+  .then(response => response.json())
+  .then(data => {
+    const projectGrid = document.querySelector('.project-grid');
+
+    data.forEach(project => {
+      const projectCard = document.createElement('div');
+      projectCard.classList.add('project');
+
+      const projectImage = document.createElement('img');
+      projectImage.src = project.image;
+      projectImage.alt = project.title;
+
+      const projectTitle = document.createElement('h3');
+      projectTitle.textContent = project.title;
+
+      const projectDescription = document.createElement('p');
+      projectDescription.textContent = project.description;
+
+      const projectLink = document.createElement('a');
+      projectLink.href = project.url;
+      projectLink.classList.add('project-link');
+      projectLink.textContent = 'View Project';
+
+      projectCard.appendChild(projectImage);
+      projectCard.appendChild(projectTitle);
+      projectCard.appendChild(projectDescription);
+      projectCard.appendChild(projectLink);
+
+      projectGrid.appendChild(projectCard);
+    });
+  })
+  .catch(error => console.error('Error fetching project data:', error));
+
+const contactForm = document.getElementById('contact-form');
+contactForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  const formData = {
+    name: document.getElementById('name').value,
+    email: document.getElementById('email').value,
+    message: document.getElementById('message').value
+  };
+
+  console.log('Form data:', formData);
+  alert('Message sent successfully!');
+
+  contactForm.reset();
+});
+</script>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <img src="https://cdn.icon-icons.com/icons2/3150/PNG/512/user_profile_female_icon_192701.png" alt="Ramya" class="profile-pic">
+      <h1>Ramya</h1>
+      <h2>Web Developer</h2>
+      <h3>Skilled in HTML, CSS, JavaScript, React</h3>
+    </section>
+
+    <section id="about" class="about">
+      <h2>About Me</h2>
+      <p>I am a passionate web developer with experience in creating modern, user-friendly websites. I have a strong foundation in HTML, CSS, and JavaScript, React.js and I am always eager to learn new technologies and techniques.</p>
+      <p>In my free time, I enjoy contributing to open-source projects and attending local meetups to stay up-to-date with the latest trends in web development.</p>
+    </section>
+
+    <section id="projects" class="projects">
+      <h2>My Projects</h2>
+      <li>Responsive landing page</li><br>
+      <li>Stopwatch</li><br>
+      <li>Tic-Tac-Toe</li><br>
+      <li>Personal Portfolio page</li><br>
+      <li>Weather app</li><br>
+      <li>Car Rental system</li>
+      
+      <div class="project-grid">
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <h2>Contact Me</h2>
+      <form id="contact-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" required></textarea>
+
+        <button type="submit">Send Message</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Ramya. All rights reserved.</p>
+  </footer>
+</body>
+</html>
